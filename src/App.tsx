@@ -1,34 +1,24 @@
 import "./App.css";
-import { useQuery, gql } from "@apollo/client";
-
-const GET_LOCATIONS = gql`
-    query GetLocations {
-        locations {
-            id
-            name
-            description
-            photo
-        }
-    }
-`;
 
 function DisplayLocations() {
-    const { loading, error, data } = useQuery(GET_LOCATIONS);
+    let { graphql, buildSchema } = require("graphql");
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error : {error.message}</p>;
+    let schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
 
-    return data.locations.map(({ id, name, description, photo }: any) => (
-        <div key={id}>
-            <h3>{name}</h3>
-            <img width="400" height="250" alt="location-reference" src={`${photo}`} />
-            <br />
-            <b>About this location:</b>
-            <p>{description}</p>
-            <br />
-        </div>
-    ));
+    let rootValue = { hello: () => "Hello world!" };
+
+    let source = "{ hello }";
+
+    graphql({ schema, source, rootValue }).then((response: any) => {
+        console.log(response);
+    });
+    return <span>rootValue</span>;
 }
+
 function App() {
     return (
         <div>
@@ -38,5 +28,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
