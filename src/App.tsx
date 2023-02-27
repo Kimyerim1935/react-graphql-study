@@ -1,31 +1,20 @@
-import "./App.css";
+import React from "react";
 
-function DisplayLocations() {
-    let { graphql, buildSchema } = require("graphql");
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+import Continents from "./apollo/Continents";
 
-    let schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-
-    let rootValue = { hello: () => "Hello world!" };
-
-    let source = "{ hello }";
-
-    graphql({ schema, source, rootValue }).then((response: any) => {
-        console.log(response);
-    });
-    return <span>rootValue</span>;
-}
+const client = new ApolloClient({
+    uri: "https://countries.trevorblades.com",
+});
 
 function App() {
     return (
-        <div>
-            <h2>My first Apollo app 🚀</h2>
-            <br />
-            <DisplayLocations />
-        </div>
+        <ApolloProvider client={client}>
+            <h1>React + Apollo Client</h1>
+            <Continents />
+        </ApolloProvider>
     );
 }
+
 export default App;
