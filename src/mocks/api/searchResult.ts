@@ -7,7 +7,7 @@
  */
 import { rest } from "msw";
 
-import { searchResultData } from "mocks/api/data/searchResultData";
+import { searchResultData } from "../api/data/searchResultData";
 
 const handlers = [rest.get("/todos", async (_, res, ctx) => res(ctx.status(200), ctx.json(searchResultData)))];
 
