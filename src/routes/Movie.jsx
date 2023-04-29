@@ -25,7 +25,7 @@ export default function Movie() {
     return (
         <>
             {
-                loading ?  <h1>Fetching........ movie</h1> : <h3>this is movie</h3>
+                loading ?  <h1>Fetching........ movie</h1> : <h3>{data.movie.title}</h3>
             }
         </>
     )
